@@ -1,0 +1,126 @@
+---
+// src/pages/courseworks/[...id].astro
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+// 1. 生成所有作业的静态路径
+export async function getStaticPaths() {
+  const allCourseworks = await getCollection('courseworks');
+  return allCourseworks.map(course => ({
+    params: { id: course.id },
+    props: { course },
+  }));
+}
+
+// 2. 获取当前作业的数据并准备渲染 Markdown
+const { course } = Astro.props;
+const { Content } = await render(course);
+
+// 3. 处理日期显示格式（如果 Markdown 里没填则不显示）
+const hasDeadline = !!course.data.deadline;
+---
+
+<Layout title={course.data.title}>
+  <div class="mb-8">
+    <a href="/courseworks" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium flex items-center gap-1">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      返回课程列表
+    </a>
+  </div>
+
+  <header class="mb-10 border-b border-slate-200 dark:border-slate-800 pb-8">
+    <h1 class="text-3xl md:text-5xl font-extrabold mb-6 text-slate-900 dark:text-white tracking-tight">
+      {course.data.title}
+    </h1>
+    
+    <div class="flex flex-wrap items-center gap-3 text-sm mb-8">
+      <span class="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 px-3 py-1 rounded-full font-medium">
+        {course.data.level === 'grad' ? '🎓 研究生课程' : '🎒 本科生课程'}
+      </span>
+      <span class="bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 px-3 py-1 rounded-full border border-blue-100 dark:border-blue-800 font-medium">
+        📚 {course.data.course}
+      </span>
+    </div>
+
+    {hasDeadline && (
+      <div class="p-6 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm">
+        <div class="space-y-1">
+          <p class="text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
+            截止时间 (Deadline)
+          </p>
+          <p class="text-lg font-bold text-slate-800 dark:text-slate-200">
+            {course.data.deadline.toLocaleString('zh-CN', { 
+              year: 'numeric', 
+              month: '2-digit', 
+              day: '2-digit', 
+              hour: '2-digit', 
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: false 
+            })}
+          </p>
+        </div>
+        
+        <div 
+          id="submission-logic-gate" 
+          data-deadline={course.data.deadline.toISOString()} 
+          data-link={course.data.submit_link}
+        >
+          <div class="h-10 w-32 bg-slate-200 dark:bg-slate-700 animate-pulse rounded-md"></div>
+        </div>
+      </div>
+    )}
+  </header>
+
+  <article class="prose prose-slate prose-lg dark:prose-invert max-w-none 
+    prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 
+    prose-img:rounded-xl prose-img:shadow-lg">
+    <Content />
+  </article>
+
+  <div class="h-20"></div>
+
+</Layout>
+
+<script>
+  function handleSubmissionStatus() {
+    const gate = document.getElementById('submission-logic-gate');
+    if (!gate) return;
+
+    const deadlineStr = gate.getAttribute('data-deadline');
+    const submitLink = gate.getAttribute('data-link');
+    
+    if (!deadlineStr) return;
+
+    const deadline = new Date(deadlineStr);
+    const now = new Date();
+
+    if (now > deadline) {
+      // 过期状态：英雄请明年再来
+      gate.innerHTML = `
+        <div class="group relative flex items-center">
+          <span class="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-bold rounded-lg cursor-not-allowed border border-slate-300 dark:border-slate-600">
+            🚫 英雄请明年再来
+          </span>
+          <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            提交通道已关闭
+          </div>
+        </div>
+      `;
+    } else {
+      // 有效状态：显示提交按钮
+      gate.innerHTML = `
+        <a href="${submitLink}" target="_blank" rel="noopener noreferrer" 
+           class="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-md hover:shadow-blue-500/20 active:scale-95">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+          提交作业
+        </a>
+      `;
+    }
+  }
+
+  // 初始化执行
+  handleSubmissionStatus();
+  // 如果学生一直开着网页，每分钟检查一次是否过期
+  setInterval(handleSubmissionStatus, 600000);
+</script>

@@ -1,0 +1,94 @@
+---
+// src/pages/courseworks.astro
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allCourseworks = await getCollection('courseworks');
+
+// 1. 先按研究生/本科生分两大类
+const gradCourses = allCourseworks.filter(course => course.data.level === 'grad');
+const undergradCourses = allCourseworks.filter(course => course.data.level === 'undergrad');
+
+// 2. 写一个辅助函数：把大类里的作业，按 `course` 字段进一步分组
+function groupByCourse(assignments) {
+  return assignments.reduce((groups, item) => {
+    // 读取 markdown 里的 course 字段
+    const courseName = item.data.course;
+    if (!groups[courseName]) {
+      groups[courseName] = [];
+    }
+    groups[courseName].push(item);
+    return groups;
+  }, {});
+}
+
+// 3. 执行分组
+const gradGrouped = groupByCourse(gradCourses);
+const undergradGrouped = groupByCourse(undergradCourses);
+---
+
+<Layout title="课程作业">
+  <div class="mb-10">
+    <h1 class="text-3xl md:text-4xl font-bold mb-4">课程作业 (Courseworks)</h1>
+    <p class="text-slate-600 dark:text-slate-400">
+      这里记录了我在本科与研究生阶段完成的重要课程作业与项目。
+    </p>
+  </div>
+
+  <section class="mb-16">
+    <h2 class="text-2xl font-semibold mb-8 border-b border-slate-200 dark:border-slate-700 pb-2 text-blue-600 dark:text-blue-400">
+      🎓 研究生课程 (Graduate)
+    </h2>
+    
+    <div class="space-y-10">
+      {Object.entries(gradGrouped).map(([courseName, assignments]) => (
+        <div>
+          <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <span class="w-2 h-6 bg-blue-500 rounded-sm inline-block"></span>
+            {courseName}
+          </h3>
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4">
+            {assignments.map(course => (
+              <li class="p-4 border border-slate-200 dark:border-slate-800 rounded-lg hover:shadow-md hover:border-blue-300 transition dark:bg-slate-800/50">
+                <a href={`/courseworks/${course.id}`} class="text-lg font-medium hover:text-blue-600 dark:hover:text-blue-400 block">
+                  {course.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      
+      {gradCourses.length === 0 && <p class="text-slate-500 italic">暂时没有添加研究生课程。</p>}
+    </div>
+  </section>
+
+  <section>
+    <h2 class="text-2xl font-semibold mb-8 border-b border-slate-200 dark:border-slate-700 pb-2 text-blue-600 dark:text-blue-400">
+      🎒 本科生课程 (Undergraduate)
+    </h2>
+    
+    <div class="space-y-10">
+      {Object.entries(undergradGrouped).map(([courseName, assignments]) => (
+        <div>
+          <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <span class="w-2 h-6 bg-blue-500 rounded-sm inline-block"></span>
+            {courseName}
+          </h3>
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4">
+            {assignments.map(course => (
+              <li class="p-4 border border-slate-200 dark:border-slate-800 rounded-lg hover:shadow-md hover:border-blue-300 transition dark:bg-slate-800/50">
+                <a href={`/courseworks/${course.id}`} class="text-lg font-medium hover:text-blue-600 dark:hover:text-blue-400 block">
+                  {course.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      
+      {undergradCourses.length === 0 && <p class="text-slate-500 italic">暂时没有添加本科生课程。</p>}
+    </div>
+  </section>
+
+</Layout>

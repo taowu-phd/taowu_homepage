@@ -12,6 +12,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.1.5"
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.5",
+    "bibtex-parse-js": "^0.0.24",
+    "tailwindcss": "^4.2.2"
   }
 }
