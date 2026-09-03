@@ -7,5 +7,4 @@ submit_link: "https://pan.hunnu.edu.cn/u/d/05dd4ed3e04b49d19f13/"
 ---
 
 ## Exercise Requirements
-1. 某地区地块的拓扑关系建立
-2. 某市区几何网络的建立
+1. 测试123
