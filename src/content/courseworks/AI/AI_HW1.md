@@ -2,7 +2,7 @@
 level: "undergrad"
 course: "人工智能与专家系统（AI）"
 title: "第一次随堂测试"
-deadline: "2026-09-08 23:59:59"
+deadline: "2026-09-15 23:59:59"
 submit_link: "https://pan.hunnu.edu.cn/u/d/aa0f6efa4f0a4cadbf7e/"
 ---
 
@@ -15,6 +15,6 @@ submit_link: "https://pan.hunnu.edu.cn/u/d/aa0f6efa4f0a4cadbf7e/"
 #### 提交格式：
 
 ```
-学号_姓名_第1次随堂作业.md
-例：2024xxxx_张三_第1次随堂作业.md
+学号_姓名_第1次随堂测试.md
+例：2024xxxx_张三_第1次随堂测试.md
 ```
