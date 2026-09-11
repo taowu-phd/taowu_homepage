@@ -3,7 +3,7 @@ level: "undergrad"
 course: "面向对象程序设计（OOP）"
 title: "第二次随堂练习"
 deadline: "2026-09-14 23:59:59"
-submit_link: "https://pan.hunnu.edu.cn/u/d/acee3b86a24c4f28a34b/"
+submit_link: "https://pan.hunnu.edu.cn/u/d/cb598f2097ba43898c36/"
 ---
 
 ## Exercise Requirements
@@ -18,6 +18,10 @@ submit_link: "https://pan.hunnu.edu.cn/u/d/acee3b86a24c4f28a34b/"
   * 获取图书详情（返回所有属性的字符串）
 
 要求标注所有属性与方法的可见性（public/private）	
+
+#### 绘图工具：
+
+下载链接：[Drawio 31.4.5](https://pan.hunnu.edu.cn/f/a39f8e59b7524307bf37/?dl=1)
 
 #### 提交格式：
 
