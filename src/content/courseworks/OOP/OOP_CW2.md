@@ -8,7 +8,7 @@ submit_link: "https://pan.hunnu.edu.cn/u/d/cb598f2097ba43898c36/"
 
 ## Exercise Requirements
 ### 随堂提交
-设计“图书（Book）”类的UML图，需包含以下内容：
+设计```图书（Book）```类的UML图，需包含以下内容：
 
 * 属性：
   * ISBN号（唯一标识）、书名、作者、出版年份、库存量
