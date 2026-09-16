@@ -2,8 +2,8 @@
 level: "undergrad"
 course: "人工智能与专家系统（AI）"
 title: "第一次随堂测试"
-deadline: "2026-09-15 23:59:59"
-submit_link: "https://pan.hunnu.edu.cn/u/d/aa0f6efa4f0a4cadbf7e/"
+deadline: "2026-09-16 23:30:00"
+submit_link: "https://pan.hunnu.edu.cn/u/d/ecf7904ef5004d64bac5/"
 ---
 
 ## Exercise Requirements
