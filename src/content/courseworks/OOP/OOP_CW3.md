@@ -38,7 +38,7 @@ submit_link: "https://pan.hunnu.edu.cn/u/d/8e2350701ca24ae2bd01/"
 
 ##### Main.cpp:
 
-```C++
+```c++
 #include <cmath>
 #include <iostream>
 #include <string>

@@ -1,7 +1,7 @@
 ---
 level: "grad"
 course: "GIS软件应用（GIS Software Application）"
-title: "第一次作业： 测试123"
+title: "第一次作业：创建项目"
 deadline: "2026-10-08 23:59:59"
 submit_link: "https://pan.hunnu.edu.cn/u/d/b0d0431a34a24d0b83c6/"
 ---
