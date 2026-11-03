@@ -12,14 +12,24 @@ submit_link: "https://pan.hunnu.edu.cn/u/d/9afc3c1cb193425f9d34/"
 
 ```
 学号_姓名_第7次随堂练习/
-  |- Point.java
-  |- TestClass.java
-  |- Layer.java
+  |- C++代码
+    |- Human.h
+    |- Human.cpp
+    |- ...
+  |- Java代码
+    |- Human.java
+    |- Student.java
+    |- ...
 
 例：2025xxxx_张三_第7次随堂练习/
-  |- Point.java
-  |- TestClass.java
-  |- Layer.java
+  |- C++代码
+    |- Human.h
+    |- Human.cpp
+    |- ...
+  |- Java代码
+    |- Human.java
+    |- Student.java
+    |- ...
 ```
 
 ### 随堂练习一：用C++代码实现下面的描述
