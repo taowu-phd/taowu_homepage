@@ -199,8 +199,8 @@ public class Tester {
     	point.addAttribute("类型=控制点");
     	point.displayInfo();
 	    point.render();
-    	std::cout << p.calculateArea() << std::endl;
-    	std::cout << p.getElevation() << std::endl;		
+    	System.out.println(p.calculateArea());
+    	System.out.println(p.getElevation());
 	}
 }
 ```
